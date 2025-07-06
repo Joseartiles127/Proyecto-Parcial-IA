@@ -66,3 +66,14 @@ while True:
     for zombie in zombies:
         if player.rect.colliderect(zombie.rect):
             game_over = True
+
+player = Player(100, 100, character="zeke", controls="wasd")
+
+player1 = Player(100, 100, character="zeke", controls="wasd")
+player2 = Player(200, 100, character="julie", controls="arrows")
+
+player1.handle_input()
+player1.draw(screen)
+
+player2.handle_input()
+player2.draw(screen)
