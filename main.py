@@ -112,3 +112,9 @@ zombie = Zombie(400, 300)
 
 zombie.update(player)
 zombie.draw(screen)
+
+background = pygame.image.load("assets/images/level01.png").convert()
+
+screen.blit(background, (0, 0))
+
+screen = pygame.display.set_mode((512, 448))
