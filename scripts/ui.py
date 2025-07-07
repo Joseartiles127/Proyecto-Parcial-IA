@@ -60,3 +60,19 @@ def show_intro(screen):
 
 # En tu main.py antes de entrar al menú:
 show_intro(screen)
+
+import pygame
+
+def show_intro(screen):
+    clock = pygame.time.Clock()
+    logo = pygame.image.load("assets/images/screenshot_00.png").convert()
+    
+    # Reproducir música de intro (una vez)
+    pygame.mixer.music.load("assets/music/konami_intro.flac")
+    pygame.mixer.music.play()
+
+    screen.blit(logo, (0, 0))
+    pygame.display.flip()
+    
+    # Esperar que la música termine o 5 segundos
+    pygame.time.wait(5000)
