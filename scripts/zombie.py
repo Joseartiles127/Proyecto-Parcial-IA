@@ -1,38 +1,73 @@
 import pygame
 import math
+from scripts.behavior_tree import *
 
 class Zombie:
     def __init__(self, x, y):
-        self.image = pygame.image.load("assets/images/zombie.png").convert_alpha()
-        self.rect = self.image.get_rect(topleft=(x, y))
-        self.speed = 2
-        self.damage_cooldown = 0  # Para evitar daño continuo cada frame
+        # Cargar sprite y preparar animación
+        sprite_sheet = pygame.image.load("assets/images/zombie.png").convert()
+        sprite_sheet.set_colorkey((255, 0, 255))  # Fondo fucsia
+
+        self.frames = []
+        frame_width = 34
+        frame_height = 51
+
+        for i in range(8):  # 8 frames de movimiento
+            frame = sprite_sheet.subsurface((i * frame_width, 0, frame_width, frame_height))
+            self.frames.append(frame)
+
+        self.current_frame = 0
+        self.animation_timer = 0
+        self.animation_speed = 10  # Velocidad de animación
+
+        self.rect = pygame.Rect(x, y, frame_width, frame_height)
+        self.speed = 1.5
+        self.patrol_points = [(x, y), (x + 100, y + 100)]
+        self.patrol_index = 0
+
+        self.behavior = Selector([
+            Sequence([IsPlayerNear(), AttackPlayer()]),
+            Sequence([IsPlayerVisible(), ChasePlayer()]),
+            PatrolArea()
+        ])
 
     def update(self, player):
-        # Movimiento simple hacia el jugador
-        dx = player.rect.centerx - self.rect.centerx
-        dy = player.rect.centery - self.rect.centery
+        self.behavior.run(self, player)
+        self.animate()
+
+    def animate(self):
+        self.animation_timer += 1
+        if self.animation_timer >= self.animation_speed:
+            self.animation_timer = 0
+            self.current_frame = (self.current_frame + 1) % len(self.frames)
+
+    def attack(self, player):
+        print("💥 Zombi ataca al jugador")
+
+    def chase(self, player):
+        dx = player.rect.x - self.rect.x
+        dy = player.rect.y - self.rect.y
+        distance = math.hypot(dx, dy)
+        if distance != 0:
+            self.rect.x += (dx / distance) * self.speed
+            self.rect.y += (dy / distance) * self.speed
+
+    def patrol(self):
+        target_x, target_y = self.patrol_points[self.patrol_index]
+        dx = target_x - self.rect.x
+        dy = target_y - self.rect.y
         distance = math.hypot(dx, dy)
 
-        if distance > 0:
-            dx /= distance
-            dy /= distance
+        if distance < 5:
+            self.patrol_index = (self.patrol_index + 1) % len(self.patrol_points)
+        else:
+            self.rect.x += (dx / distance) * self.speed
+            self.rect.y += (dy / distance) * self.speed
 
-        self.rect.x += dx * self.speed
-        self.rect.y += dy * self.speed
+    def draw(self, screen):
+        frame = self.frames[self.current_frame]
+        screen.blit(frame, self.rect.topleft)
 
-        # Reducir cooldown de daño
-        if self.damage_cooldown > 0:
-            self.damage_cooldown -= 1
-
-    def check_collision(self, player):
-        # Detecta colisión con el jugador
-        if self.rect.colliderect(player.rect):
-            if self.damage_cooldown == 0:
-                print("¡Zombie atacó al jugador!")
-                self.damage_cooldown = 60  # 1 segundo a 60 FPS
-                return True
-        return False
 
     def draw(self, screen):
         screen.blit(self.image, self.rect.topleft)
