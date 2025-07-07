@@ -159,3 +159,23 @@ self.tracks = {
     "victory": "assets/music/victory.ogg"
 }
 
+from scripts.neighbor import Neighbor
+
+neighbor = Neighbor(300, 250)
+neighbors = [neighbor]
+score = 0
+
+for n in neighbors:
+    if n.update(player):
+        score += 100  # O cualquier valor
+    n.draw(screen)
+
+font = pygame.font.SysFont("Arial", 24)
+
+score_text = font.render(f"Puntuación: {score}", True, (255, 255, 255))
+screen.blit(score_text, (10, 10))
+
+if n.update(player):
+    sound_manager.play("pickup")
+    score += 100
+
