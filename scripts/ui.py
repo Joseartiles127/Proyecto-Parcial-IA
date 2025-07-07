@@ -48,3 +48,15 @@ def show_game_over(screen):
 
         pygame.display.flip()
         clock.tick(60)
+
+konami_logo = pygame.image.load("assets/images/screenshot_00.png").convert()
+
+def show_intro(screen):
+    clock = pygame.time.Clock()
+    logo = pygame.image.load("assets/images/screenshot_00.png").convert()
+    screen.blit(logo, (0, 0))
+    pygame.display.flip()
+    pygame.time.delay(2000)  # Mostrar 2 segundos
+
+# En tu main.py antes de entrar al menú:
+show_intro(screen)
