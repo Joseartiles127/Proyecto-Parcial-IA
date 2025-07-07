@@ -128,3 +128,8 @@ if keys[pygame.K_SPACE]:
 screen.blit(background, (0, 0))
 
 screen = pygame.display.set_mode((512, 448))
+
+from scripts.ui import show_intro
+show_intro(screen)
+
+pygame.mixer.music.stop()
