@@ -184,3 +184,19 @@ from scripts.ui import show_intro
 if not show_intro(screen):
     pygame.quit()
     exit()
+
+from scripts.character_select import select_character
+
+chosen = select_character(screen)
+
+if chosen is None:
+    pygame.quit()
+    exit()
+
+# Cargar personaje en player.py
+player = Player(100, 100, character=chosen)  # character='zeke' o 'julie'
+
+if character == "zeke":
+    self.image = pygame.image.load("assets/images/zeke.png").convert_alpha()
+elif character == "julie":
+    self.image = pygame.image.load("assets/images/julie.png").convert_alpha()
