@@ -115,6 +115,10 @@ zombie.draw(screen)
 
 background = pygame.image.load("assets/images/level01.png").convert()
 
+import pygame
+pygame.init()
+pygame.mixer.init()
+
 from scripts.sound_manager import SoundManager
 sound_manager = SoundManager()
 
