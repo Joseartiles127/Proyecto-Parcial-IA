@@ -68,6 +68,9 @@ class Zombie:
         frame = self.frames[self.current_frame]
         screen.blit(frame, self.rect.topleft)
 
+    def attack(self, player):
+    self.sound_manager.play("attack")  # si pasas sound_manager al zombie
+
 
     def draw(self, screen):
         screen.blit(self.image, self.rect.topleft)
