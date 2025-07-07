@@ -107,3 +107,8 @@ while True:
 
     if zombie.check_collision(player):
         game_over = True  # O reducir vida del jugador
+
+zombie = Zombie(400, 300)
+
+zombie.update(player)
+zombie.draw(screen)
