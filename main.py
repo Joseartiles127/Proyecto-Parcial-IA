@@ -179,3 +179,8 @@ if n.update(player):
     sound_manager.play("pickup")
     score += 100
 
+from scripts.ui import show_intro
+
+if not show_intro(screen):
+    pygame.quit()
+    exit()
