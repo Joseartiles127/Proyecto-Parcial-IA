@@ -77,3 +77,17 @@ player1.draw(screen)
 
 player2.handle_input()
 player2.draw(screen)
+
+# Crear lista de zombis
+zombies = [
+    Zombie(400, 200),
+    Zombie(600, 300),
+]
+
+# En el bucle principal del juego:
+for zombie in zombies:
+    zombie.update(player)
+    zombie.draw(screen)
+
+    if zombie.check_collision(player):
+        game_over = True  # O reducir vida del jugador
