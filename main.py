@@ -89,5 +89,21 @@ for zombie in zombies:
     zombie.update(player)
     zombie.draw(screen)
 
+    menu_active = True
+game_over = False
+
+while True:
+    if menu_active:
+        menu_active = show_menu(screen)
+        continue
+
+    if game_over:
+        game_over = show_game_over(screen)
+        continue
+
+    if player.lives <= 0 or all_neighbors_dead:
+    game_over = True
+
+
     if zombie.check_collision(player):
         game_over = True  # O reducir vida del jugador
