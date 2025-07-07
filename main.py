@@ -133,3 +133,29 @@ from scripts.ui import show_intro
 show_intro(screen)
 
 pygame.mixer.music.stop()
+
+import pygame
+pygame.mixer.init()
+
+# Cargar y reproducir música del nivel
+pygame.mixer.music.load("assets/music/zombie_panic.ogg")
+pygame.mixer.music.play(-1)  # -1 significa bucle infinito
+
+pygame.mixer.music.stop()
+
+from scripts.music_manager import MusicManager
+
+music = MusicManager()
+
+# Antes del nivel
+music.stop()
+music.play("zombie_panic")
+
+self.tracks = {
+    "main": "assets/music/main_theme.ogg",
+    "intro": "assets/music/konami_intro.flac",
+    "zombie_panic": "assets/music/zombie_panic.ogg",
+    "game_over": "assets/music/game_over.ogg",
+    "victory": "assets/music/victory.ogg"
+}
+
