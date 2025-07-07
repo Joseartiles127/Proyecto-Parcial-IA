@@ -115,6 +115,12 @@ zombie.draw(screen)
 
 background = pygame.image.load("assets/images/level01.png").convert()
 
+from scripts.sound_manager import SoundManager
+sound_manager = SoundManager()
+
+if keys[pygame.K_SPACE]:
+    sound_manager.play("shoot")
+
 screen.blit(background, (0, 0))
 
 screen = pygame.display.set_mode((512, 448))
