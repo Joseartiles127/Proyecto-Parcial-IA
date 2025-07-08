@@ -200,3 +200,6 @@ if character == "zeke":
     self.image = pygame.image.load("assets/images/zeke.png").convert_alpha()
 elif character == "julie":
     self.image = pygame.image.load("assets/images/julie.png").convert_alpha()
+
+if pygame.joystick.get_count() > 0:
+    player.move_with_joystick(joystick)
