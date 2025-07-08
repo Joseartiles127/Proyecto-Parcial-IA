@@ -71,6 +71,40 @@ class Zombie:
     def attack(self, player):
     self.sound_manager.play("attack")  # si pasas sound_manager al zombie
 
+    from scripts.behavior_tree import Selector, Sequence, Condition, Action
+
+def setup_behavior(zombie, player):
+    def can_see_player():
+        return zombie.distance_to(player) < 200
+
+    def is_close():
+        return zombie.distance_to(player) < 40
+
+    def patrol():
+        zombie.patrol()
+        return True
+
+    def chase():
+        zombie.chase(player)
+        return True
+
+    def attack():
+        zombie.attack(player)
+        return True
+
+    return Selector([
+        Sequence([
+            Condition(can_see_player),
+            Condition(is_close),
+            Action(attack)
+        ]),
+        Sequence([
+            Condition(can_see_player),
+            Action(chase)
+        ]),
+        Action(patrol)
+    ])
+
 
     def draw(self, screen):
         screen.blit(self.image, self.rect.topleft)
