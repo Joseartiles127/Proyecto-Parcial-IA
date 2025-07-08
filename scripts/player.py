@@ -76,3 +76,16 @@ class Player:
         frame.blit(self.image, (0, 0), (self.current_frame * self.frame_width, row * self.frame_height, self.frame_width, self.frame_height))
         screen.blit(frame, self.rect.topleft)
 
+def move_with_joystick(self, joystick):
+    x_axis = joystick.get_axis(0)
+    y_axis = joystick.get_axis(1)
+
+    speed = 5
+    if abs(x_axis) > 0.2:
+        self.x += x_axis * speed
+    if abs(y_axis) > 0.2:
+        self.y += y_axis * speed
+
+    self.rect.topleft = (self.x, self.y)
+
+
